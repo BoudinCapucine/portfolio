@@ -1,35 +1,177 @@
 ---
-title: Markdown Mystery Tour
+title: Enhancing AI-Powered Search 
 publishDate: 2020-03-02 00:00:00
-img: /assets/stock-1.jpg
+img: /assets/cmpp.jpg
 img_alt: Iridescent ripples of a bright blue and pink liquid
 description: |
-  We designed a whodunnit-style game to introduce Markdown formatting. Suspense — suspicion — syntax!
+    Six-month internship focused on improving the institute’s search tool for conference content through advanced AI models, NLP, and semantic search optimization.
 tags:
-  - Design
-  - Dev
-  - User Testing
+  - NLP
+  - Semantic Search
+  - LLM
 ---
 
-## Level-two heading
+### Overview
 
-> Tell me and I forget. Teach me and I remember. Involve me and I learn.
+> Making cultural content more accessible through intelligent information retrieval.
 
-Lorem ipsum dolor sit amet, <a href="https://astro.build/">Astro</a> makes people happy. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin nibh nisl condimentum id venenatis a condimentum vitae. Dapibus ultrices in iaculis nunc. Arcu odio ut sem nulla pharetra diam sit amet. Diam quis enim lobortis scelerisque fermentum dui faucibus in ornare.
+During my end-of-studies internship at **Cité de la Musique – Philharmonie de Paris**, I worked on enhancing their search engine for conference content. This project allowed me to combine my expertise in Data & Artificial Intelligence with my passion for the cultural and music sectors.
 
-Arcu dui vivamus arcu felis bibendum ut tristique et egestas. Eget gravida cum sociis natoque penatibus. Cras fermentum odio eu feugiat pretium nibh. Proin nibh nisl condimentum id venenatis. Porta nibh venenatis cras sed felis eget velit. Id diam vel quam elementum pulvinar etiam non.
+The main goal was to improve the performance of an existing proof-of-concept (PoC) search tool by testing and integrating state-of-the-art AI models, including **named entity extraction**, **classification algorithms**, and **semantic similarity search**.
 
-### Level-three heading
+#### Key Contributions
 
-Ultrices tincidunt arcu non sodales neque sodales ut. Sed enim ut sem viverra aliquet eget sit amet. Lacus luctus accumsan tortor posuere ac ut consequat semper viverra. Viverra accumsan in nisl nisi scelerisque eu ultrices. In massa tempor nec feugiat nisl pretium fusce.
+- **Enhanced entity extraction** by evaluating and integrating state-of-the-art NLP models, improving accuracy and coverage of relevant entities.
 
-### Level-three heading
+- **Refined semantic search relevance** by enriching context representation for each data segment, leading to more precise and user-centric results.
 
-Sed pulvinar porttitor mi in ultricies. Etiam non dolor gravida eros pulvinar pellentesque et dictum ex. Proin eu ornare ligula, sed condimentum dui. Vivamus tincidunt tellus mi, sed semper ipsum pharetra a. Suspendisse sollicitudin at sapien nec volutpat. Etiam justo urna, laoreet ac lacus sed, ultricies facilisis dolor. Integer posuere, metus vel viverra gravida, risus elit ornare magna, id feugiat erat risus ullamcorper libero. Proin vitae diam auctor, laoreet lorem vitae, varius tellus.
+- **Mitigated model hallucinations** by implementing a dual-prompt validation process to cross-check and ensure the reliability of generated answers.
 
-Aenean pretium purus augue, ut bibendum erat convallis quis. Cras condimentum quis velit ac mollis. Suspendisse non purus fringilla, venenatis nisl porta, finibus odio. Curabitur aliquet metus faucibus libero interdum euismod. Morbi sed magna nisl. Morbi odio nibh, facilisis vel sapien eu, tempus tincidunt erat. Nullam erat velit, sagittis at purus quis, tristique scelerisque tortor. Pellentesque lacinia tortor id est aliquam viverra. Vestibulum et diam ac ipsum mollis fringilla.
+- Collaborated in a robust development environment leveraging Visual Studio Code, Docker, WSL, and GitHub for efficient implementation and version control.
 
-#### Level-four heading
+#### The Challenge of Semantic Retrieval
+The search for relevant information within vast knowledge bases represents a major challenge for modern artificial intelligence systems, particularly in the field of semantic retrieval, which refers to the ability to retrieve information based on the meaning of words and phrases rather than exact matches.
 
-- We noted this
-- And also this other point
+In order for an algorithm to process text efficiently, textual data is converted into numerical representations called embeddings. Each **embedding** is linked to a text fragment, commonly referred to as a **chunk**. However, fragmenting a document into chunks can create problems. Dividing a document into isolated segments may disrupt the flow of discourse and harm contextual coherence. This loss of context affects the quality of semantic similarity search, as linguistic elements such as pronouns, anaphora, or context-dependent expressions become ambiguous once extracted from their environment.
+##### Two Main Approaches to Contextualization
+**1. Contextual Retrieval (Contextual Embedding)**
+
+Each chunk is enriched during the embedding process by concatenating the chunk with a summary generated by a LLM. This summary captures both document-level and chunk-specific information. The resulting embedding therefore reflects both the local content of the chunk and the relevant context of the entire document.
+
+**2. Late Chunking**
+
+Late chunking is an alternative to traditional document splitting. Instead of dividing a document before encoding, this method delays chunking until after the entire document has been represented by the model. The model first processes the entire document to produce token-by-token representations enriched by the global context. Embeddings are then extracted from this complete representation, preserving long-range semantic relationships.
+
+##### Methodology and Experimental Approach
+To explore the limitations of document chunking and the impact of context on embedding quality, I followed a multi-step experimental approach:
+
+**Literature Review**
+
+I began with an in-depth review of existing resources, including:
+
+- Academic publications on RAG systems, contextual embeddings, and ranking functions 
+
+- Technical blog posts (notably OpenAI, Anthropic, Hugging Face, Jina, etc)
+
+- Benchmarks comparing various vectorization and retrieval methods
+
+This phase helped formalize the three approaches to compare: naive chunking, contextual chunking, and late chunking.
+
+**Technical Implementation**
+
+Three pipelines were developed, each corresponding to a processing strategy:
+
+- Naive Chunking: Uniform text splitting without added context (method used at the beginning of the internship).
+
+- Contextual Chunking: Each chunk is enriched with an LLM-generated summary, concatenated before embedding.
+
+- Late Chunking: The entire document is encoded first, and local embeddings are extracted from the full contextual representation.
+
+**Experimental Protocol**
+
+The evaluation was structured into three successive phases:
+
+- Phase 1: Tests on synthetic data created for pedagogical purposes, to validate hypotheses in a controlled environment.
+
+- Phase 2: Tests on samples from conferences to simulate semi-realistic cases.
+
+- Phase 3: Tests on full conferences.
+
+**Evaluation**
+
+At each stage, retrieval relevance was measured through both human evaluation and comparison against indexes manually prepared by documentalists.
+
+##### Results and Interpretations
+**Phase 1: Synthetic Data Tests**
+
+To illustrate the problem of context loss, I created short artificial chunks, often only one sentence long, deliberately separating subjects from their context by using pronouns like “he” or “she.” 
+Example chunks:
+
+*Chunk 1: "Beethoven's Ninth Symphony was completed in 1824, after several years of hard work."*
+
+*Chunk 2: "It is particularly famous for its final movement, which introduces human voices into a symphony for the first time."*
+
+*Chunk 3: "The sung text is taken from Friedrich Schiller's Ode to Joy, a poem that celebrates universal brotherhood."*
+
+*Chunk 4: "Beethoven, completely deaf at the time of composition, never heard the work he created."*
+
+*Chunk 5: "The introduction of the first movement is dark and dramatic, almost menacing."*
+
+*Chunk 6: "There is a constant tension felt, supported by the deep strings and heavy silences."*
+
+*Chunk 7: "The third movement is of serene beauty, as if suspended out of time."*
+
+*Chunk 8: "I have always been struck by the modernity of this work, even two centuries after its creation."*
+
+*Chunk 9: "For me, it embodies the triumph of the human spirit in the face of adversity."*
+
+*Chunk 10: "When the choir sings ‘Freude, schöner Götterfunken,’ there is an almost spiritual elevation felt."*
+
+*Chunk 11: "This symphony is regularly played at political or symbolic events, like an anthem of peace."*
+
+*Chunk 12: "The composer wanted a work that transcends the boundaries of time and language."*
+
+*Chunk 13: "He was applauded at the end of the first performance, although he could not hear the applause."*
+
+Using Jina, I compared Naive, Contextual, and Late Chunking with the query:
+"Symbolism of Beethoven’s Ninth Symphony" :
+
+![Texte alternatif](/assets/plot1.jpg "Plot 1")
+
+Observations:
+
+Naive Chunking produced scattered results, as expected, since no context was provided and chunks were evaluated in isolation.
+
+Late Chunking and Contextual Chunking showed much tighter clustering, demonstrating the impact of context.
+
+Late Chunking embeddings were highly compact, forming clear clusters closer to the document representation, indicating strong global coherence but potentially reduced nuance for highly specific queries.
+
+Contextual Chunking embeddings were less compact, allowing better semantic distinctions between chunks and closer alignment with the query.
+
+**Phase 2: Real Conference Excerpts**
+
+- Dataset: Five fragments from a Philharmonie conference presented by philosopher Alain Badiou.
+- Query: "Ambiguity of the musical work"
+
+
+![Texte alternatif](/assets/plot2.jpg "Plot 2")
+
+Observations :
+
+Naive Chunking failed to extract a clear signal from this abstract query due to the absence of context.
+
+Contextual Chunking produced the most relevant embeddings, confirming the value of LLM-generated summaries.
+
+Late Chunking provided globally coherent embeddings but was less effective for targeted queries due to reduced local discrimination.
+
+**Phase 3: Full Conference Tests**
+
+The Cité de la Musique - Philharmonie de Paris systematically collects detailed metadata for each conference, including titles, themes, and speakers, curated by professional staff. In this latest test, I aimed to compare the effectiveness of using metadata alone against summaries generated by large language models (LLMs), as well as a hybrid approach that combines both methods.
+
+Query: "Gilles Dellbare’s reflection on the use of digital tools in music education"
+
+![Texte alternatif](/assets/plot3.jpg "Plot 3")
+
+Observations :
+
+Combining metadata with contextual embeddings produced the best results in terms of distance measurements. In further analysis, I investigated whether this distance correlated with more coherent responses. To accomplish this, I selected conferences that had been manually indexed by professionals, allowing me to compare the recommendations provided by the documentalists with those suggested by the hybrid method and the metadata-only approach.
+
+I found that the metadata-only method yielded responses that were closer to those of the documentalists, indicating its greater effectiveness. 
+
+As a result, I decided to adopt this method for developing the search tool.
+
+#### Results 
+
+This project improved the way users interact with the search tool by enabling complex queries that return highly relevant results.
+
+The screenshot below illustrates the enhanced interface:
+
+![Texte alternatif](/assets/poc.PNG "Search Tool")
+
+Conferences are displayed in order of decreasing relevance.
+
+Within each conference, blue markers in the player represent specific content fragments (chunks) that match the query.
+
+The darker the blue marker, the higher the semantic relevance, allowing users to jump directly to the most meaningful segments without browsing entire recordings.
+
+

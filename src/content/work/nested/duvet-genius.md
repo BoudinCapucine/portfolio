@@ -1,22 +1,87 @@
 ---
-title: Duvet Genius
+title: LLM For Equity Trading
 publishDate: 2020-03-04 00:00:00
-img: /assets/stock-3.jpg
+img: /assets/logo_pix.png
 img_alt: Pearls of silky soft white cotton, bubble up under vibrant lighting
 description: |
-  We developed a virtual showcase for the softest bedding imaginable.
+    Group project involving 6 students (3 in Finance and 3 in Data & AI) to build an AI-powered financial analysis tool for Crédit Mutuel Asset Management (CMAM).
 tags:
-  - Design
-  - Dev
-  - Branding
+  - Finance
+  - RAG
+  - ChatBot
 ---
+## Project Description
+The **LLM for Equity Trading** project aimed to develop an AI-powered financial analysis platform for **Crédit Mutuel Asset Management (CMAM)**.  
+The tool helps assess companies’ financial health and identify potential investment opportunities by combining:
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur posuere commodo venenatis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam non ligula vel metus efficitur hendrerit. In hac habitasse platea dictumst. Praesent et mauris ut mi dapibus semper. Curabitur tortor justo, efficitur sit amet pretium cursus, porta eget odio. Cras ac venenatis dolor. Donec laoreet posuere malesuada. Curabitur nec mi tempor, placerat leo sit amet, tincidunt est. Quisque pellentesque venenatis magna, eget tristique nibh pulvinar in. Vestibulum vitae volutpat arcu. Aenean ut malesuada odio, sit amet pellentesque odio. Suspendisse nunc elit, blandit nec hendrerit non, aliquet at magna. Donec id leo ut nulla sagittis sodales.
+- **Structured data** (financial databases)  
+- **Unstructured data** (10-K financial reports)
 
-Integer vitae nibh elit. Suspendisse eget urna eu neque bibendum pharetra. Sed interdum lectus sem, in pulvinar magna dignissim vel. Quisque maximus at urna nec laoreet. Suspendisse potenti. Vestibulum rhoncus sem ut mi pellentesque, in vestibulum erat blandit. Aliquam sodales dui ac maximus consectetur. Duis quis est vehicula, imperdiet nisl nec, fermentum erat. Duis tortor diam, pharetra eu euismod in, vehicula non eros. Curabitur facilisis dui at erat ultrices gravida. In at nunc ultricies, pulvinar mi vel, sagittis mauris. Praesent pharetra posuere purus ac imperdiet. Nulla facilisi.
+We integrated **Llama 3.1-8B** with a **Retrieval-Augmented Generation (RAG)** pipeline to extract and summarize insights from complex financial documents.
 
-Sed pulvinar porttitor mi in ultricies. Etiam non dolor gravida eros pulvinar pellentesque et dictum ex. Proin eu ornare ligula, sed condimentum dui. Vivamus tincidunt tellus mi, sed semper ipsum pharetra a. Suspendisse sollicitudin at sapien nec volutpat. Etiam justo urna, laoreet ac lacus sed, ultricies facilisis dolor. Integer posuere, metus vel viverra gravida, risus elit ornare magna, id feugiat erat risus ullamcorper libero. Proin vitae diam auctor, laoreet lorem vitae, varius tellus.
 
-Mauris sed eros in ex maximus volutpat. Suspendisse potenti. Donec lacinia justo consectetur sagittis tempor. Proin ullamcorper nisi vitae auctor rhoncus. Sed tristique aliquam augue. Pellentesque vitae fringilla ligula. Nulla arcu elit, efficitur eu nunc malesuada, eleifend tincidunt orci. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer mattis orci in bibendum ultricies. Quisque a dui erat. Phasellus et vulputate ipsum. Proin metus ex, lobortis nec ornare eget, bibendum ut sapien. Aliquam in dolor lobortis, aliquam tellus a, congue augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+## Key Functionalities
+### 1. Retrieval-Augmented Generation (RAG)
+RAG combines a language model with an external search system to retrieve relevant information before generating an answer.  
+Instead of relying only on what the AI already knows, it dynamically fetches information from a knowledge base (10-K reports) and uses it to generate accurate and context-aware responses.  
 
-Aenean pretium purus augue, ut bibendum erat convallis quis. Cras condimentum quis velit ac mollis. Suspendisse non purus fringilla, venenatis nisl porta, finibus odio. Curabitur aliquet metus faucibus libero interdum euismod. Morbi sed magna nisl. Morbi odio nibh, facilisis vel sapien eu, tempus tincidunt erat. Nullam erat velit, sagittis at purus quis, tristique scelerisque tortor. Pellentesque lacinia tortor id est aliquam viverra. Vestibulum et diam ac ipsum mollis fringilla.
+This approach is particularly valuable in finance, where precision is critical. For example, RAG can extract specific details from thousands of pages of regulatory filings and provide concise, reliable answers.  
+
+#### Our RAG Implementation
+- **Chunking:** Breaking reports into smaller, searchable segments.  
+- **Indexing:** Storing these chunks in a vector database.  
+- **Retrieval:** Fetching only the most relevant segments for a query.  
+- **Response Generation:** Using LLM to generate clear answers grounded in the original data.  
+
+
+### 2. Dataframe Chatbot
+The DataFrame Chatbot allows users to run queries directly on **structured data**.
+The workflow is straightforward:
+
+- Upload a CSV file containing the dataset.
+
+- Select the relevant columns you want to analyze. This step is essential to reduce noise and prevent the AI from generating irrelevant or incorrect results ("hallucinations").
+
+- Enter a natural language query in the chatbot.
+
+For example, a user can type:
+
+"Group the data by {column1} and compute the average of {column2}"
+
+The chatbot interprets the query, executes it on the selected columns, and returns the result instantly.
+
+#
+🎥 **Watch the demo** 
+<video width="600" controls>
+  <source src="/assets/dataframe_chatbot.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+### 3. Plot Generation 
+The chatbot also generates **dynamic financial visualizations**.  
+The Plot Generation feature works in a very similar way to the DataFrame Chatbot, but instead of text-based answers, it creates interactive visualizations.
+
+The workflow is:
+
+- Upload a CSV file with your data.
+
+- Select the columns you want to work with to ensure the plot is meaningful and reduce potential errors.
+
+- Enter a natural language query describing the plot you need.
+
+For example:
+
+"Make a plot of {column1} and profit for {company}"
+
+The AI then generates an interactive visualization, making it easier for financial analysts and data professionals to explore trends and present insights 
+#
+🎥 **Watch the demo** 
+<video width="600" controls>
+  <source src="/assets/plot_generation.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+## Project Presentation
+At the end of the project, we had the opportunity to present our solution to **CMAM** and **La Française**.  
+We demonstrated how our tool could streamline financial analysis and received positive feedback from industry professionals.
+##
+![Texte alternatif](/assets/team122.jpg "Equipe 122")

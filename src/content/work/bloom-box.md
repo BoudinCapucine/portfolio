@@ -1,23 +1,67 @@
 ---
-title: Bloom Box
+title: AI-Powered Mission-Consultant Matching System
 publishDate: 2019-12-01 00:00:00
-img: /assets/stock-2.jpg
+img: /assets/avisia.jpg
 img_alt: A bright pink sheet of paper used to wrap flowers curves in front of rich blue background
 description: |
   We paired with a cutting-edge music API and a team of horticulturalists
   to build AI-generated playlists that maximize houseplant health.
 tags:
-  - Dev
-  - Branding
-  - Backend
+  - BigQuery
+  - GCP
+  - Dataiku
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur posuere commodo venenatis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam non ligula vel metus efficitur hendrerit. In hac habitasse platea dictumst. Praesent et mauris ut mi dapibus semper. Curabitur tortor justo, efficitur sit amet pretium cursus, porta eget odio. Cras ac venenatis dolor. Donec laoreet posuere malesuada. Curabitur nec mi tempor, placerat leo sit amet, tincidunt est. Quisque pellentesque venenatis magna, eget tristique nibh pulvinar in. Vestibulum vitae volutpat arcu. Aenean ut malesuada odio, sit amet pellentesque odio. Suspendisse nunc elit, blandit nec hendrerit non, aliquet at magna. Donec id leo ut nulla sagittis sodales.
+### Objective 
+My internship at a data science consulting firm, aligned perfectly with my academic studies. I aimed to develop an application to match available missions with in-house consultants using advanced data processing and machine learning.
+I focused on creating the model that employed search and matching algorithms. Utilizing tools like Dataiku and Google Cloud Platform (GCP), including BigQuery, the project aimed to enhance the matching experience between tenders and consultants. 
+Key objectives included:
 
-Integer vitae nibh elit. Suspendisse eget urna eu neque bibendum pharetra. Sed interdum lectus sem, in pulvinar magna dignissim vel. Quisque maximus at urna nec laoreet. Suspendisse potenti. Vestibulum rhoncus sem ut mi pellentesque, in vestibulum erat blandit. Aliquam sodales dui ac maximus consectetur. Duis quis est vehicula, imperdiet nisl nec, fermentum erat. Duis tortor diam, pharetra eu euismod in, vehicula non eros. Curabitur facilisis dui at erat ultrices gravida. In at nunc ultricies, pulvinar mi vel, sagittis mauris. Praesent pharetra posuere purus ac imperdiet. Nulla facilisi.
+- Streamlining the sales team's process for matching consultants to missions.
+- Allowing consultants to find similar profiles for potential mission changes.
 
-Sed pulvinar porttitor mi in ultricies. Etiam non dolor gravida eros pulvinar pellentesque et dictum ex. Proin eu ornare ligula, sed condimentum dui. Vivamus tincidunt tellus mi, sed semper ipsum pharetra a. Suspendisse sollicitudin at sapien nec volutpat. Etiam justo urna, laoreet ac lacus sed, ultricies facilisis dolor. Integer posuere, metus vel viverra gravida, risus elit ornare magna, id feugiat erat risus ullamcorper libero. Proin vitae diam auctor, laoreet lorem vitae, varius tellus.
+### Implementation Process
+The application featured a search bar enabling users to submit tenders or search by keywords. I distinguished between two main functions:
 
-Mauris sed eros in ex maximus volutpat. Suspendisse potenti. Donec lacinia justo consectetur sagittis tempor. Proin ullamcorper nisi vitae auctor rhoncus. Sed tristique aliquam augue. Pellentesque vitae fringilla ligula. Nulla arcu elit, efficitur eu nunc malesuada, eleifend tincidunt orci. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer mattis orci in bibendum ultricies. Quisque a dui erat. Phasellus et vulputate ipsum. Proin metus ex, lobortis nec ornare eget, bibendum ut sapien. Aliquam in dolor lobortis, aliquam tellus a, congue augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+- Searching: Finding a consultant or mission based on text, a short description, or a keyword.
 
-Aenean pretium purus augue, ut bibendum erat convallis quis. Cras condimentum quis velit ac mollis. Suspendisse non purus fringilla, venenatis nisl porta, finibus odio. Curabitur aliquet metus faucibus libero interdum euismod. Morbi sed magna nisl. Morbi odio nibh, facilisis vel sapien eu, tempus tincidunt erat. Nullam erat velit, sagittis at purus quis, tristique scelerisque tortor. Pellentesque lacinia tortor id est aliquam viverra. Vestibulum et diam ac ipsum mollis fringilla.
+![Texte alternatif](/assets/plot26.jpg "Searching")
+
+- Matching: Associating consultants with similar profiles.
+
+![Texte alternatif](/assets/plot27.jpg "Matching")
+
+### Challenges and Solutions
+I conducted research to identify the best algorithms and implemented them:
+
+- Developed a keyword extraction method using BERT.
+- Created embeddings for consultant and mission attributes.
+- Used cosine distance for similarity calculations.
+- I realized that not all attributes were necessary, leading to a refined selection focusing on skills and mission details (summaries and keywords).
+By testing various keyword extraction methods, I found TF-IDF to be the most effective for improving matching accuracy.
+
+### First Improvement: Grouping Skills by Category
+Following suggested improvements, I identified the need to consolidate similar skills in the dataset. For instance, "SQL" and "Database Management" are closely related but created discrepancies in matching missions and consultants. To address this, I aimed to group subcategories of skills, allowing for better alignment.
+
+With access to an OpenAI API key, I planned to use prompts to aggregate skills into families. By providing OpenAI with all skills in my dataset, I aimed to categorize them effectively. 
+
+### Second Improvement: Adding Stopwords to TF-IDF
+Using keywords with the TF-IDF method proved effective for matching missions and consultants. However, I noticed many irrelevant terms, such as pronouns and conjunctions, cluttering the results. This issue arose primarily with shorter texts where the algorithm included too many words.
+
+I proposed limiting the number of keywords based on text length but was advised against it due to potential information loss. Instead, my mentor suggested utilizing a "stop words" list to exclude non-essential terms. I compiled a refined list of around 100 common words to enhance the relevance of generated keywords.
+
+### Third Improvement: Replacing BERT with OpenAI
+
+While BERT performed well, we identified several compelling reasons to switch to OpenAI's model for enhanced capabilities:
+
+- Improved Performance: OpenAI's model is more advanced and offers better handling of complex language tasks, which could lead to more accurate summaries and enhanced overall performance.
+
+- Flexibility in Summarization: Using Dataiku's built-in text summarization feature presented challenges with prompt constraints, often resulting in excessively lengthy summaries with irrelevant details. OpenAI's capabilities allow for more precise control over output length and content.
+
+### Automation
+To ensure daily updates, I automated the processing scripts. The application required the creation of tables in BigQuery, followed by data processing in Dataiku, and similarity calculations in GCP. I structured the flow in Dataiku to streamline this process, enabling automatic updates each morning at 4 AM before office hours.
+
+### Results
+By combining my processed data, embeddings, and similarity calculations with the front end, users can search for consultants or missions by entering keywords or text in a search bar.
+
+![Texte alternatif](/assets/projet_avisia.jpg "Result")
